@@ -1,52 +1,55 @@
-struct Segtree {
-	  vector<ll> tree;
-	  vector<ll> arr; 
-	  int n;
-	  Segtree(int a_len, vector<ll> &a) { 
-	  	  arr = a;
-	  	  n = a_len;
-	  	  tree.resize(4 * n); fill(all(tree), 0);
-	  	  build(0, n - 1, 1);
-	  }
-	  void build(int start, int end, int index)  
-	  {
-	  	  if (start == end)	{
-	  	  	tree[index] = arr[start];
-	  	  	return;
-	  	  }
-	  	  int mid = (start + end) / 2;
-	  	  build(start, mid, 2 * index);
-	  	  build(mid + 1, end, 2 * index + 1);
-	  	  tree[index]=max(tree[2 * index] , tree[2 * index + 1]);
-	  }
-	  void update(int start, int end, int index, int query_index, ll val)  
-	  {
-	  	  if (start == end) {
-	  	  	  tree[index] = val;
-	  	  	  return;
-	  	  }
-	  	  int mid = (start + end) / 2;
-	  	  if (mid >= query_index){
-	  	  	  update(start, mid, 2 * index, query_index, val);
+void build(ll node,ll start,ll end,vector<ll> &tree,vector<ll> &a) 
+{
+    if(start==end){    
+        tree[node]=a[start];
+    }
+    else{
+    
+        ll mid=(start+end)/2;
+        build(2*node+1,start,mid,tree,a);
+        build(2*node+2,mid+1,end,tree,a);
+        tree[node]=min(tree[2*node+1],tree[2*node+2]);
+    }
+ }
+ 
+void update(ll node,ll start,ll end,ll idx,ll val,vector<ll> &tree,vector<ll> &a)
+{
+ 
+    if(start==end){
+       
+       a[idx]=val;
+       tree[node]=val;
+    
+    }
+ 
+    else{
+      
+        ll mid=(start+end)/2;
+        if(idx>=start && idx<=mid){    
+            update(2*node+1,start,mid,idx,val,tree,a);
         }
-	  	  else{
-	  	  	  update(mid + 1, end, 2 * index + 1, query_index, val);
+        else{    
+            update(2*node+2,mid+1,end,idx,val,tree,a);
         }
-	  	  tree[index]=max(tree[2 * index] , tree[2 * index + 1]);
-	  }
-	  ll query(int start, int end, int index, int left, int right) { 
-	  	  if (start > right || end < left){
-	  	  	  return 0;
-        }
-	  	  if (start >= left && end <= right){
-	  	  	  return tree[index];
-        }
-	  	  int mid = (start + end) / 2;
-        
-	  	  ll l, r, ans;
-	  	  l = query(start, mid, 2 * index, left, right);
-	  	  r = query(mid + 1, end, 2 * index + 1, left, right);
-	  	  ans=max(l,r);
-	  	  return ans;
-	  }
-};
+        tree[node]=min(tree[2*node+1],tree[2*node+2]);
+    }
+}
+ll query(ll node,ll start,ll end,ll l,ll r,vector<ll> &tree)
+{
+    if(l>end||start>r)
+    {     
+        return INF;
+    }
+    if(l<=start&&r>=end)
+    {    
+        return tree[node];
+    }
+    ll q1,q2;
+    ll mid=(start+end)/2;
+    q1 = query(2*node+1,start,mid,l,r,tree);
+    q2 = query(2*node+2,mid+1,end,l,r,tree);
+    return (min(q1,q2));
+}
+//build(0,0,n-1,tree,B);
+//query(0,0,n-1,left_range, right_range, tree);
+//update(0,0,n-1,index,value,tree,B);

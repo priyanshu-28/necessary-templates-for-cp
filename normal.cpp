@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
+using cd = complex<double>;
 #define YES cout << "YES\n"
 #define NO cout << "NO\n"
 #define yes cout << "Yes\n"
@@ -14,26 +15,24 @@ using namespace std;
 #define lli long long int
 #define FIO ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0)
 #define INF 1e18
-#define mod 1000000007 
-const int N = 5e5 + 5;
+#define mod 998244353 
+const int N = 3e5 + 5;
 const int MAXN = 1000010;
+const double PI = acos(-1);
 ll fact[N], invfact[N];
-#include <string.h>
 //------------------------------------------------------------------------------------------------------------------------------------------------------//
 //------------------------------------------------------------------------------------------------------------------------------------------------------//
 //------------------------------------------------------------------------------------------------------------------------------------------------------//
 
-bool cmp(pair<string,ll> & a,
-         pair<string,ll> & b){
-    if(a.second > b.second){
+bool cmp(pair<ll,ll> & a,
+         pair<ll,ll> & b){
+    if(a.first > b.first){
         return true;
     }
     if(a.second == b.second){
-        return a.first < b.first;
+        return a.first > b.first;
     }
-    // if(a.first<b.first){
-    //     return true;
-    // }
+    
     return false;
 }
 
@@ -61,11 +60,24 @@ bool isPerfectSquare(ll x){if (x >= 0) {ll sr = sqrt(x);return (sr * sr == x);}r
 //------------------------------------------------------------------------------------------------------------------------------------------------------//
 //------------------------------------------------------------------------------------------------------------------------------------------------------//
 
+// function<void(ll,ll)> dfs = [&](ll u, ll pre){
+     
+
+// };
 
 void solve(){
-    ll a, b, c, d, n, m, k, i, j, cnt, temp;
-    
+    ll a, b, c, d, n, m, k, i, j, cnt;
+        
+    cin >> n;
 
+    vector<ll> v(n);
+    for(i = 0 ; i < n; i++){
+        cin >> v[i];
+    }
+
+
+    
+    
 }
 
 int main()
